@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A10 Part 2 </title>
+  <style>
+    body {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: black;
+        color: white;
+    }
+
+    .tooltip {
+        opacity: 0;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        border: solid;
+        border-width: 2px;
+        border-radius: 5px;
+        padding: 10px;
+        color: white;
+        pointer-events: none;
+    }
+
+    #bar-chart {
+        margin: 0 auto;
+        text-align: center;
+    }
+  </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://colorbrewer2.org/export/colorbrewer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
+</head>
+
+<body>
+    <h1>A10 (Redesigned) Sequential Bar Chart</h1>
+    <h2 style="text-align: center;">Distribution of Diseases (1968)</h2>
+    <div id="bar-chart"></div>
+    <script type="module" src="new.js"></script>
+    <footer>
+        Data Source: <a href="https://corgis-edu.github.io/corgis/csv/health/" target="_blank">Health Dataset</a> from CORGIS Project
+    </footer>
+    <br><br><br>
+    <h4>This chart is better because it uses a color scale that goes in order to show the number of infections. This helps the reader see the infection numbers <br>without just looking at how tall the bars are. It also includes a legend, so readers can understand what the colors mean. Plus, there's a footer that <br>tells you where the data came from. And the annotations on the chart are clearer, making it easier to understand.</h4>
+
+    <br><br><br><br><br><br>
+    <hr style="width: 50%;">
+    <br><br><br><br><br><br>
+    <h1>VERSUS</h1>
+    <br><br><br><br><br><br>
+    <hr style="width: 50%;">
+    <br><br><br><br><br><br>
+
+    <h1>A2 Bar Chart</h1>
+    <script src="old.js"></script>
+    <br><br><br>
+    <h4>This chart could be misleading because it doesn't say where the information comes from, so readers might not trust it. Also, there are too many notes <br>on the chart, which could confuse people. And because there's no color scale, it's difficult to compare the information visually.</h4>
+</body>
