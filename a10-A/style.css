@@ -5,24 +5,6 @@ body {
     color: white;
 }
 
-.import-bar {
-    fill: steelblue;
-}
-
-.import-bar:hover {
-    fill: lightsteelblue;
-    transition: fill 1s ease;
-}
-
-.export-bar {
-    fill: indianred;
-}
-
-.export-bar:hover {
-    fill: lightcoral;
-    transition: fill 1s ease;
-}
-
 .tooltip {
     opacity: 0;
     position: absolute;

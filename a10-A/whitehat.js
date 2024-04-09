@@ -1,7 +1,7 @@
 // Define dimensions and margins
-const margin = { top: 100, right: 100, bottom: 250, left: 250 };
+const margin = { top: 250, right: 500, bottom: 250, left: 250 };
 const width = 1800 - margin.left - margin.right;
-const height = 1000 - margin.top - margin.bottom;
+const height = 1200 - margin.top - margin.bottom;
 
 // Create SVG element
 const svg = d3
@@ -14,7 +14,6 @@ const svg = d3
 
 // Define scales
 const xScale = d3.scaleBand().range([0, width]).padding(0.25);
-
 const yScale = d3.scaleLinear().range([height, 0]);
 
 // Add x-axis
@@ -25,6 +24,46 @@ const xAxis = svg
 
 // Add y-axis
 const yAxis = svg.append("g").attr("class", "y-axis");
+
+// Add x-axis label
+svg.append("text")
+  .attr("transform", `translate(${width / 2}, ${height +  margin.top / 2 + 75})`)
+  .style("text-anchor", "middle")
+  .style("font-size", "18px")
+  .style("fill", "white")
+  .style("font-weight", "bold")
+  .text("Type of Good");
+
+// Add y-axis label
+svg.append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("y", 0 - margin.left / 2 - 50)
+  .attr("x", 0 - height / 2)
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .style("font-size", "18px")
+  .style("fill", "white")
+  .style("font-weight", "bold")
+  .text("Value (USD)");
+
+// Add legend titles
+svg.append("text")
+  .attr("class", "legend-title")
+  .attr("x", width + 20)
+  .attr("y", 10)
+  .style("text-anchor", "start")
+  .style("font-size", "16px")
+  .style("fill", "white")
+  .text("Imports Value (USD)");
+
+svg.append("text")
+  .attr("class", "legend-title")
+  .attr("x", width + 20)
+  .attr("y", 160)
+  .style("text-anchor", "start")
+  .style("font-size", "16px")
+  .style("fill", "white")
+  .text("Exports Value (USD)");
 
 // Tooltip functions
 const tooltip = d3
@@ -82,6 +121,53 @@ Promise.all([d3.csv("import-goods.csv"), d3.csv("export-goods.csv")])
         d3.max(combinedData, (d) => Math.max(d.import, d.export)),
       ]);
 
+      // Color scale
+      var importColor = d3.scaleSequential()
+        .domain([0, d3.max(combinedData, (d) => d.import)])
+        .range([colorbrewer.PuBu[9][3], colorbrewer.PuBu[9][7]])
+        .nice();
+
+      var exportColor = d3.scaleSequential()
+        .domain([0, d3.max(combinedData, (d) => d.export)])
+        .range([colorbrewer.OrRd[9][3], colorbrewer.OrRd[9][7]])
+        .nice();
+
+      // Add color legends
+      svg.selectAll(".legend").remove();
+      svg.append("g")
+        .attr("class", "legend import-legend")
+        .attr("transform", `translate(${width + 20}, 20)`)
+        .style("fill", "white");
+
+      svg.append("g")
+        .attr("class", "legend export-legend")
+        .attr("transform", `translate(${width + 20}, 170)`)
+        .style("fill", "white");
+
+      var importLegend = d3.legendColor()
+        .shapeWidth(30)
+        .cells(5)
+        .orient("vertical")
+        .scale(importColor);
+
+      var exportLegend = d3.legendColor()
+        .shapeWidth(30)
+        .cells(5)
+        .orient("vertical")
+        .scale(exportColor);
+
+      svg.select(".import-legend")
+        .call(importLegend)
+        .selectAll("text")
+        .text(function(d) { return d3.format(",")(d); });
+
+      svg.select(".export-legend")
+        .call(exportLegend)
+        .selectAll("text")
+        .text(function(d) { return d3.format(",")(d); });
+
+
+
       // Update existing bars
       const bars = svg.selectAll(".bar").data(combinedData);
 
@@ -99,6 +185,7 @@ Promise.all([d3.csv("import-goods.csv"), d3.csv("export-goods.csv")])
         .attr("y", (d) => yScale(d.import))
         .attr("width", xScale.bandwidth() / 2)
         .attr("height", (d) => height - yScale(d.import))
+        .attr("fill", (d) => importColor(d.import))
         .on("mouseover", showTooltip)
         .on("mousemove", updateTooltip)
         .on("mouseleave", hideTooltip);
@@ -114,6 +201,7 @@ Promise.all([d3.csv("import-goods.csv"), d3.csv("export-goods.csv")])
         .attr("y", (d) => yScale(d.export))
         .attr("width", xScale.bandwidth() / 2)
         .attr("height", (d) => height - yScale(d.export))
+        .attr("fill", (d) => exportColor(d.export))
         .on("mouseover", showTooltip)
         .on("mousemove", updateTooltip)
         .on("mouseleave", hideTooltip);
