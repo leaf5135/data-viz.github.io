@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A10</title>
+    <title>A10 Part 1</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://d3js.org/d3.v6.js"></script>
     <script src="https://colorbrewer2.org/export/colorbrewer.js"></script>
@@ -11,10 +11,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"></script>
 </head>
 <body>
-    <h2>A10 Part 1</h2>
-    <h3>Black Hat Viz</h3>
-    <script src="blackhat.js"></script>
-    <h3>White Hat Viz</h3>
+    <h1>Black Hat Viz</h1>
+    <h2>U.S is the richest country with staggering amounts of imports and exports: More color = more money!</h2>
+    <div id="pie-chart"></div>
+    <script  type="module" src="blackhat.js"></script>
+    <footer>
+        <p>I found the good stuff <a href="https://www.merriam-webster.com/dictionary/import" target="_blank">HERE</a></p>
+        <p>and also here <a href="https://www.merriam-webster.com/dictionary/export" target="_blank">HERE</a></p>
+    </footer>
+    <h4>Reason why it's a bad chart: The chart is confusing because it's a pie chart with lots of colors, making it hard to understand. The labels are all <br>bunched up and overlap each other, so it's tough for viewers to figure out what's going on. Also, the legend blocks part of the chart, making it even <br>more unclear. Plus, the data isn't even from a reliable source; it's just linked to a dictionary page. And to top it off, the title doesn't give any <br>useful information about the data.</h4>
+
+    <br><br><br><br><br><br>
+    <hr style="width: 50%;">
+    <br><br><br><br><br><br>
+    <h1>VERSUS</h1>
+    <br><br><br><br><br><br>
+    <hr style="width: 50%;">
+    <br><br><br><br><br><br>
+
+    <h1>White Hat Viz</h1>
     <h2>Comparison of U.S. Goods Imports and Exports (1999-2021)</h2>
     <p>Psst... use the drop down menu below to select a year to view the data for that year.</p>
     <p>Hover over the bars to see the exact values and differences between imports and exports.</p>
@@ -24,5 +39,6 @@
         <p>Data source: <a href="https://usafacts.org/economy/" target="_blank">Original data set</a></p>
         <p>Data was spliced and transposed to contain only the relevant types of imports and exports.</p>
     </footer>
+    <h4>Reason why this chart is much better and clear: This sequential paired bar chart is a clear and effective way to represent data compared to a pie <br>chart. By displaying imports and exports of goods side by side, organized by type and year with a dropdown menu, it enhances comprehension. The use of <br>a sequential color scale aids understanding of data size, even without directly comparing bar heights. It adheres to principles like data <br>transformation and Gestalt principles, ensuring clarity. Annotations highlight the key detail of the chart, and the source is prominently cited below, adding credibility.</h4>
 </body>
 </html>
