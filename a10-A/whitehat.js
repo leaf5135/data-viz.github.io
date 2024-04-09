@@ -65,6 +65,29 @@ svg.append("text")
   .style("fill", "white")
   .text("Exports Value (USD)");
 
+// Annotations
+const annotations = [
+  {
+    note: {
+      label: 'Notice how the values of general merchandise imports and exports are significantly higher than other goods',
+      title: 'General Merchandise Dependency',
+    },
+    x: 200,
+    y: 300,
+    dy: -50,
+    dx: 100,
+    width: 200,
+    type: d3.annotationLabel
+  },
+];
+
+const makeAnnotations = d3.annotation()
+  .annotations(annotations);
+
+svg.append("g")
+  .attr("class", "annotation-group")
+  .call(makeAnnotations);
+
 // Tooltip functions
 const tooltip = d3
   .select("body")
