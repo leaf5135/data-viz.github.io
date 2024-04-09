@@ -1,11 +1,11 @@
 // Define dimensions and margins
-const margin = { top: 250, right: 500, bottom: 250, left: 250 };
+const margin = { top: 100, right: 500, bottom: 250, left: 250 };
 const width = 1800 - margin.left - margin.right;
 const height = 1200 - margin.top - margin.bottom;
 
 // Create SVG element
 const svg = d3
-  .select("#chart")
+  .select("#bar-chart")
   .append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -27,7 +27,7 @@ const yAxis = svg.append("g").attr("class", "y-axis");
 
 // Add x-axis label
 svg.append("text")
-  .attr("transform", `translate(${width / 2}, ${height +  margin.top / 2 + 75})`)
+  .attr("transform", `translate(${width / 2}, ${height +  margin.top / 2 + 150})`)
   .style("text-anchor", "middle")
   .style("font-size", "18px")
   .style("fill", "white")
@@ -103,7 +103,7 @@ Promise.all([d3.csv("import-goods.csv"), d3.csv("export-goods.csv")])
 
     // Create dropdown menu
     const dropdown = d3
-      .select("body")
+      .select("#year-dropdown")
       .append("select")
       .attr("id", "year-select")
       .on("change", updateChart);
@@ -188,8 +188,6 @@ Promise.all([d3.csv("import-goods.csv"), d3.csv("export-goods.csv")])
         .call(exportLegend)
         .selectAll("text")
         .text(function(d) { return d3.format(",")(d); });
-
-
 
       // Update existing bars
       const bars = svg.selectAll(".bar").data(combinedData);
