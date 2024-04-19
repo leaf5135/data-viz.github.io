@@ -91,19 +91,29 @@ d3.tsv("data.tsv", function(d) {
 		  .attr("width", width - margin.right);
 
 
-	  function hover(elem) {
-	     // Add code here for 'hover'
-	  }
+	function hover(elem) {
+		var cityId = elem.srcElement.attributes['data-id'].value;
+		var path = city.select('#' + cityId);
+		if (path.attr('visibility') == 'hidden') {
+			return;
+		}
+
+		for (let line of city.selectAll('.line').nodes()) {
+			if (line.id != cityId) {
+				d3.select(line).style('stroke', 'lightgrey');
+			}
+		}
+	}
 
 	  function exit(elem) {
 	     var attrs = elem.srcElement.attributes;
 	     let id = attrs['data-id'].value;
 	     let path = city.select('#' + id);
 	     if (path.attr('visibility') == 'hidden') {
-	  	return;
+	  		return;
 	     }
 	     city.selectAll('.line').style('stroke', d => {
-	  	return z(d.id)
+	  		return z(d.id)
 	     });
 	  }
 
@@ -112,8 +122,12 @@ d3.tsv("data.tsv", function(d) {
 		var path = city.select('#' + cityId);
 		if (path.attr('visibility') == 'hidden') {
 			path.attr('visibility', 'visible');
+			hover({srcElement: {attributes: {'data-id': {value: cityId}}}})
 		} else {
 			path.attr('visibility', 'hidden');
+			for (let line of city.selectAll('.line').nodes()) {
+				exit({srcElement: {attributes: {'data-id': {value: line.id}}}})
+			}
 		}
 	}
 
@@ -162,7 +176,8 @@ d3.tsv("data.tsv", function(d) {
 	      .style("font", "10px sans-serif")
 	      .text(function(d) { return d.id; })
 		  .on("mouseout", exit)
-		  .on("click", click);
+		  .on("click", click)
+		  .on("mouseover", hover);
 })
 
 </script>
