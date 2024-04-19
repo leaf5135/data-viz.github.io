@@ -111,17 +111,17 @@ d3.tsv("data.tsv", function(d) {
         }
     }
 
-      function exit(elem) {
-         var attrs = elem.srcElement.attributes;
-         let id = attrs['data-id'].value;
-         let path = city.select('#' + id);
-         if (path.attr('visibility') == 'hidden') {
+    function exit(elem) {
+        var attrs = elem.srcElement.attributes;
+        let id = attrs['data-id'].value;
+        let path = city.select('#' + id);
+        if (path.attr('visibility') == 'hidden') {
             return;
-         }
-         city.selectAll('.line').style('stroke', d => {
+        }
+        city.selectAll('.line').style('stroke', d => {
             return z(d.id)
-         });
-      }
+        });
+    }
 
     function click(elem) {
         var cityId = elem.srcElement.attributes['data-id'].value;
@@ -141,12 +141,15 @@ d3.tsv("data.tsv", function(d) {
           .attr("transform", `translate(0,${height})`)
           .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0))
 
-      function zoomed(event) {
-        // Add code here for zooming
-      }
+    function zoomed(event) {
+        const xz = event.transform.rescaleX(x);
+        x_axis.call(xAxis, xz);
+        city.selectAll(".line").attr("d", function(d) { return makeLine(xz)(d.values); });
+        city.selectAll(".label").attr("transform", function(d) { return "translate(" + xz(d.value.date) + "," + y(d.value.temperature) + ")"; });
+    }
 
       const zoom = d3.zoom()
-          .scaleExtent([1, 5])
+          .scaleExtent([1, 50])
           .extent([[margin.left, 0], [width - margin.right, height]])
           .translateExtent([[margin.left, -Infinity], [width - margin.right, Infinity]])
           .on("zoom", zoomed);
@@ -155,7 +158,6 @@ d3.tsv("data.tsv", function(d) {
         .transition()
           .duration(100)
           .call(zoom.scaleTo, 1, [x(Date.UTC(2012, 1, 1)), 0]);
-
 
 
       city.append("path")
