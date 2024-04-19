@@ -2,6 +2,12 @@
 <meta charset="utf-8">
 <style>
 
+body {
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
 .axis--x path {
   display: none;
 }
@@ -81,7 +87,7 @@ d3.tsv("data.tsv", function(d) {
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
           .attr("dy", "0.71em")
-          .attr("fill", "#000")
+          .attr("fill", "white")
           .text("Temperature, ºF");
 
       var city = g.selectAll(".city")
@@ -100,7 +106,7 @@ d3.tsv("data.tsv", function(d) {
 
         for (let line of city.selectAll('.line').nodes()) {
             if (line.id != cityId) {
-                d3.select(line).style('stroke', 'lightgrey');
+                d3.select(line).style('stroke', 'grey');
             }
         }
     }
@@ -110,10 +116,10 @@ d3.tsv("data.tsv", function(d) {
          let id = attrs['data-id'].value;
          let path = city.select('#' + id);
          if (path.attr('visibility') == 'hidden') {
-              return;
+            return;
          }
          city.selectAll('.line').style('stroke', d => {
-              return z(d.id)
+            return z(d.id)
          });
       }
 
@@ -130,7 +136,6 @@ d3.tsv("data.tsv", function(d) {
             }
         }
     }
-
 
       const xAxis = (g, x) => g
           .attr("transform", `translate(0,${height})`)
@@ -173,11 +178,16 @@ d3.tsv("data.tsv", function(d) {
           .attr("y", 15)
           .attr("dy", "0.35em")
           .attr("data-id", d => d.id.substring(0, 3).toUpperCase())
-          .style("font", "10px sans-serif")
+          .style("font", "12px sans-serif")
+          .attr("fill", "white")
           .text(function(d) { return d.id; })
           .on("mouseout", exit)
           .on("click", click)
           .on("mouseover", hover);
+
+        svg.selectAll(".label").each(function(d) {
+            console.log("City ID:", d.id);
+        });
 })
 
 </script>
