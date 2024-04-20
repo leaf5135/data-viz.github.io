@@ -107,8 +107,11 @@ d3.tsv("data.tsv", function(d) {
         for (let line of city.selectAll('.line').nodes()) {
             if (line.id != cityId) {
                 d3.select(line).style('stroke', 'grey');
+                d3.select(line).style('opacity', 0.5);
             }
         }
+
+        path.style('stroke-width', 3);
     }
 
     function exit(elem) {
@@ -118,8 +121,14 @@ d3.tsv("data.tsv", function(d) {
         if (path.attr('visibility') == 'hidden') {
             return;
         }
+        city.selectAll('.line').style('stroke-width', d => {
+            return 1.5;
+        })
+        city.selectAll('.line').style('opacity', d => {
+            return 1;
+        });
         city.selectAll('.line').style('stroke', d => {
-            return z(d.id)
+            return z(d.id);
         });
     }
 
